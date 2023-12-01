@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewData["Title"] = "Address";
+}
+
+<h1>Address</h1>
+<select id="selectCity">
+
+</select>
+<select id="selectDistrict">
+</select>
+<select id="selectRoad">
+</select>
+<div id="div1">1</div>
+@section Scripts{
+<script>
+        const selectCity = document.querySelector("#selectCity");
+        const selectDistrict = document.querySelector("#selectDistrict");
+        const selectRoad = document.querySelector("#selectRoad");
+        const divInfo=document.querySelector("#div1");
+        selectCity.addEventListener('change', () => {
+            //const i = selCity.selectedIndex;
+            //console.log(selCity.options[i].value);
+            //console.log(selCity.options[i].text);
+            //  console.log(selCity.value);
+            //   console.log(selCity.text);
+            loaddistrict();
+        })
+        selectDistrict.addEventListener('change', () => {
+            // console.log(selDistrict.value);
+            loaddroad()
+        })
+        selectRoad.addEventListener('change', () => {
+            //console.log(selectRoad.value);
+            divInfo.innerHTML = `${selectCity.value}${selectDistrict.value}${selectRoad.value}`;
+        })
+
+        
+        //const xhr=new XMLHttpRequest();
+        function loadcity(){
+
+            const xhr = new XMLHttpRequest();
+            xhr.addEventListener('load',()=>{
+                
+            const datas=JSON.parse(xhr.responseText);
+            const cities = datas.map(city => `<option value='${ city }'>${city}</option>`)
+                selectCity.innerHTML = cities.join("");
+                loaddistrict();
+            })
+            xhr.open('GET', '@Url.Content("~/Ajax/cities")');
+        xhr.send();
+        }
+
+        function loaddistrict() {
+
+            const xhr = new XMLHttpRequest();
+            xhr.addEventListener('load', () => {
+                
+                const datas = JSON.parse(xhr.responseText);
+                const districts = datas.map(district => `<option value='${district}'>${district}</option>`)
+                selectDistrict.innerHTML = districts.join("");
+                loaddroad();
+            })
+            xhr.open('GET', `@Url.Content("~/Ajax/districts")?city=${selectCity.value}`);
+            xhr.send();
+        }
+        function loaddroad() {
+
+            const xhr = new XMLHttpRequest();
+            xhr.addEventListener('load', () => {
+                
+                const datas = JSON.parse(xhr.responseText);
+                const roads = datas.map(road => `<option value='${road}'>${road}</option>`)
+                selectRoad.innerHTML = roads.join("");
+            })
+            xhr.open('GET', `@Url.Content("~/Ajax/roads")?siteID=${selectDistrict.value}`);
+            xhr.send();
+        }
+
+
+        loadcity();
+       // loaddistrict();
+       // loaddroad();
+</script>
+}

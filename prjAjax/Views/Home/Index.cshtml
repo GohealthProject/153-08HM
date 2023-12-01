@@ -1,0 +1,93 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@section SSSS{
+    <style>
+        p { background-color:darkred;
+        }
+    </style>
+   
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p >Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<div>
+    <table id="tableEmployee" class="table table-bordered  table-hover">
+       
+       <thead>
+            <tr>
+                <th>姓名</th>
+                <th>年資</th>
+                <th>薪資</th>
+            </tr>
+       </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+
+</div>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+@section Scripts{
+
+    <script>
+        $('.display-4').css('background-color', 'yellow');
+        //const emps = [{ "name": "Tom", "workYears": 3, "salary": 35000 },
+        //{ "name": "Jack", "workYears": 5, "salary": 40000 },
+        //{ "name": "Mary", "workYears": 7, "salary": 45000 }];
+        ////emps = [];
+        //console.log(emps[1]);
+        ////emps[1]={}
+        //console.log(emps[1].name);
+
+        //for(let i=0,max=emps.length;i<max;i++){
+        //    console.log(emps[i].name);
+        //    console.log(emps[i].workYears);
+        //    console.log(emps[i].salary);
+        //}
+        var emp = {
+            "employees": [
+                { "name": "Tom", "workYears": 3, "salary": 35000 },
+                { "name": "Jack", "workYears": 5, "salary": 40000 },
+                { "name": "Mary", "workYears": 7, "salary": 45000 }
+            ]
+        };
+        //for(let i=0;i<emp.employees.length;i++){
+        //console.log(emp.employees[i].name)
+        //    console.log(emp.employees[i].workYears)
+        //    console.log(emp.employees[i].salary)
+        //}
+        const a=emp.employees.map(e=>{
+            const { name, workYears, salary }=e;
+            return (
+                `
+                                <tr>
+                                        <td>${name}</td>
+                                        <td>${workYears}</td>
+                                        <td>${salary}</td>
+                               </tr>
+                                `
+            )
+        })
+
+        document.querySelector('#tableEmployee>tbody').innerHTML=a.join("");
+
+        //const datas = emp.employees.map(employee => {
+        //    const { name, workYears, salary } = employee;
+        //    return (
+        //        `
+        //                <tr>
+        //                        <td>${name}</td>
+        //                        <td>${workYears}</td>
+        //                        <td>${salary}</td>
+        //               </tr>
+        //                `
+        //    )
+        //})
+        //document.querySelector('#tableEmployee>tbody').innerHTML = datas.join("");
+
+    </script>
+}
